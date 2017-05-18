@@ -2354,7 +2354,10 @@ and dependencies (minified).
 		/* returns element position according to content */
 		_childPos=function(el){
 			var p=el.parents(".mCSB_container");
-			return [el.offset().top-p.offset().top,el.offset().left-p.offset().left];
+			if(!p.length) {
+                return [ el.offset().top, el.offset().left ];
+			}
+			return [ el.offset().top-p.offset().top, el.offset().left-p.offset().left ];
 		},
 		/* -------------------- */
 		
