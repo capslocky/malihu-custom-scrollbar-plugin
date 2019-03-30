@@ -1512,7 +1512,7 @@ and dependencies (minified).
                         contentPosX=Math.abs($("#mCSB_"+d.idx+"_container")[0].offsetLeft),
                         draggerPosX=mCSB_dragger[1][0].offsetLeft,
                         limitX=mCSB_dragger[1].parent().width()-mCSB_dragger[1].width(),
-                        dltX=e.deltaX || delta;
+                        dltX=e.deltaX;
 
                     var dirY="y",
                         px=[Math.round(deltaFactor*d.scrollRatio.y),parseInt(o.mouseWheel.scrollAmount)],
@@ -1520,7 +1520,7 @@ and dependencies (minified).
                         contentPosY=Math.abs($("#mCSB_"+d.idx+"_container")[0].offsetTop),
                         draggerPosY=mCSB_dragger[0][0].offsetTop,
                         limitY=mCSB_dragger[0].parent().height()-mCSB_dragger[0].height(),
-                        dltY=e.deltaY || delta;
+                        dltY=e.deltaY;
 
                     if((dirY==="y" && !d.overflowed[0]) || (dirX==="x" && !d.overflowed[1])){return;}
                     if(o.mouseWheel.invert || e.webkitDirectionInvertedFromDevice){dltX=-dltX;dltY=-dltY;}
