@@ -1471,7 +1471,7 @@ and dependencies (minified).
 				_onMousewheel(e,delta);
 			});
 			function _onMousewheel(e,delta){
-				console.log('we here');
+				console.log('we here', e, delta);
 				_stop($this);
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
@@ -1513,7 +1513,7 @@ and dependencies (minified).
                         contentPosX=Math.abs($("#mCSB_"+d.idx+"_container")[0].offsetLeft),
                         draggerPosX=mCSB_dragger[1][0].offsetLeft,
                         limitX=mCSB_dragger[1].parent().width()-mCSB_dragger[1].width(),
-                        dltX=e.deltaX || e.deltaY || delta;
+                        dltX=e.deltaX || delta;
 
                     var dirY="y",
                         px=[Math.round(deltaFactor*d.scrollRatio.y),parseInt(o.mouseWheel.scrollAmount)],
