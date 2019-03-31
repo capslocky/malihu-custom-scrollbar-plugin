@@ -1475,8 +1475,7 @@ and dependencies (minified).
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
 					dur=o.scrollInertia;
-				if (o.axis === "x" || o.axis === "y") {
-				if(o.axis==="x" || o.mouseWheel.axis==="x"){
+				if(o.axis==="x" || o.mouseWheel.axis==="x" || o.axis === "yx" && e.deltaX ){
 					var dir="x",
 						px=[Math.round(deltaFactor*d.scrollRatio.x),parseInt(o.mouseWheel.scrollAmount)],
 						amount=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.width() ? mCustomScrollBox.width()*0.9 : px[0],
@@ -1505,37 +1504,6 @@ and dependencies (minified).
 					amount=e.deltaFactor; dur=17;
 				}
 				_scrollTo($this,(contentPos-(dlt*amount)).toString(),{dir:dir,dur:dur});
-				} else if (o.axis === "yx") {
-                    var dirX="x",
-                        px=[Math.round(deltaFactor*d.scrollRatio.x),parseInt(o.mouseWheel.scrollAmount)],
-                        amountX=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.width() ? mCustomScrollBox.width()*0.9 : px[0],
-                        contentPosX=Math.abs($("#mCSB_"+d.idx+"_container")[0].offsetLeft),
-                        draggerPosX=mCSB_dragger[1][0].offsetLeft,
-                        limitX=mCSB_dragger[1].parent().width()-mCSB_dragger[1].width(),
-                        dltX=e.deltaX;
-
-                    var dirY="y",
-                        px=[Math.round(deltaFactor*d.scrollRatio.y),parseInt(o.mouseWheel.scrollAmount)],
-                        amountY=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.height() ? mCustomScrollBox.height()*0.9 : px[0],
-                        contentPosY=Math.abs($("#mCSB_"+d.idx+"_container")[0].offsetTop),
-                        draggerPosY=mCSB_dragger[0][0].offsetTop,
-                        limitY=mCSB_dragger[0].parent().height()-mCSB_dragger[0].height(),
-                        dltY=e.deltaY;
-
-                    if((dirY==="y" && !d.overflowed[0]) || (dirX==="x" && !d.overflowed[1])){return;}
-                    if(o.mouseWheel.invert || e.webkitDirectionInvertedFromDevice){dltX=-dltX;dltY=-dltY;}
-                    if(o.mouseWheel.normalizeDelta){dltX=dltX<0 ? -1 : 1;dltY=dltY<0 ? -1 : 1;}
-                    if((dltX>0 && draggerPosX!==0) || (dltX<0 && draggerPosX!==limitX) || (dltY>0 && draggerPosY!==0) || (dltY<0 && draggerPosY!==limitY) || o.mouseWheel.preventDefault){
-                        e.stopImmediatePropagation();
-                        e.preventDefault();
-                    }
-				if(e.deltaFactor<5 && !o.mouseWheel.normalizeDelta){
-					//very low deltaFactor values mean some kind of delta acceleration (e.g. osx trackpad), so adjusting scrolling accordingly
-					amountX=e.deltaFactor; amountY=e.deltaFactor; dur=17;
-				}
-                    _scrollTo($this,(contentPosX-(dltX*amountX)).toString(),{dir:dirX, dur:dur});
-                    _scrollTo($this,(contentPosY-(dltY*amountY)).toString(),{dir:dirY, dur:dur});
-                }
 			}
 		},
 		/* -------------------- */
