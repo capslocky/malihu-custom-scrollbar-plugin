@@ -1476,7 +1476,17 @@ and dependencies (minified).
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
 					dur=o.scrollInertia;
-				if (o.axis === "yx" && e.deltaX && e.deltaY ) { return; } /* disable mouse-wheel for both axios in the same time */
+				if (o.axis === "yx" && e.deltaX && e.deltaY ) { 
+					const deltaX = Math.abs(e.deltaX);
+					const deltaY = Math.abs(e.deltaY);
+					if (deltaX > deltaY) {
+						e.deltaY = 0;
+					} else if (deltaY > deltaX) {
+						e.deltaX = 0;
+					} else {
+						return;
+					}
+				}
 				if(o.axis==="x" || o.mouseWheel.axis==="x" || o.axis === "yx" && e.deltaX && !e.deltaY ){
 					var dir="x",
 						px=[Math.round(deltaFactor*d.scrollRatio.x),parseInt(o.mouseWheel.scrollAmount)],
