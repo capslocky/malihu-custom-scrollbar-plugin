@@ -1476,7 +1476,7 @@ and dependencies (minified).
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
 					dur=o.scrollInertia;
-				if(o.axis==="x" || o.mouseWheel.axis==="x" || o.axis === "yx" && e.deltaX ){
+				if(o.axis==="x" || o.mouseWheel.axis==="x" || o.axis === "yx" && e.deltaX && !e.deltaY ){
 					var dir="x",
 						px=[Math.round(deltaFactor*d.scrollRatio.x),parseInt(o.mouseWheel.scrollAmount)],
 						amount=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.width() ? mCustomScrollBox.width()*0.9 : px[0],
