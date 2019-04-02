@@ -1471,7 +1471,6 @@ and dependencies (minified).
 				_onMousewheel(e,delta);
 			});
 			function _onMousewheel(e,delta){
-				console.log(o.axis, 'deltaX=', e.deltaX, 'deltaY=', e.deltaY);
 				_stop($this);
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
@@ -1515,7 +1514,6 @@ and dependencies (minified).
 					//very low deltaFactor values mean some kind of delta acceleration (e.g. osx trackpad), so adjusting scrolling accordingly
 					amount=e.deltaFactor; dur=17;
 				}
-				console.log('dir=', dir, 'dur=', dur, 'dlt=', dlt);
 				_scrollTo($this,(contentPos-(dlt*amount)).toString(),{dir:dir,dur:dur});
 			}
 		},
