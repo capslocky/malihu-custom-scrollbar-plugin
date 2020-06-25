@@ -1104,6 +1104,7 @@ and dependencies (minified).
 				/* clear and delete timeouts/objects */
 				clearTimeout($this[0]._focusTimeout); _delete($this[0],"_focusTimeout");
 				clearTimeout(d.sequential.step); _delete(d.sequential,"step");
+				if (!mCSB_container.length) { return; }
 				clearTimeout(mCSB_container[0].onCompleteTimeout); _delete(mCSB_container[0],"onCompleteTimeout");
 				d.bindEvents=false;
 			}
@@ -1928,6 +1929,7 @@ and dependencies (minified).
 		_autoUpdate=function(rem){
 			var $this=$(this),d=$this.data(pluginPfx),o=d.opt,
 				mCSB_container=$("#mCSB_"+d.idx+"_container");
+				if (!mCSB_container.length) { return; }
 			if(rem){
 				/* 
 				removes autoUpdate timer 
@@ -2352,7 +2354,10 @@ and dependencies (minified).
 		/* returns element position according to content */
 		_childPos=function(el){
 			var p=el.parents(".mCSB_container");
-			return [el.offset().top-p.offset().top,el.offset().left-p.offset().left];
+			if(!p.length) {
+                return [ el.offset().top, el.offset().left ];
+			}
+			return [ el.offset().top-p.offset().top, el.offset().left-p.offset().left ];
 		},
 		/* -------------------- */
 		
