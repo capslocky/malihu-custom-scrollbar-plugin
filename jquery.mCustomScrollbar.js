@@ -1476,7 +1476,18 @@ and dependencies (minified).
 				if(_disableMousewheel($this,e.target)){return;} /* disables mouse-wheel when hovering specific elements */
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
 					dur=o.scrollInertia;
-				if(o.axis==="x" || o.mouseWheel.axis==="x"){
+				if (o.axis === "yx" && e.deltaX && e.deltaY ) { 
+					const deltaX = Math.abs(e.deltaX);
+					const deltaY = Math.abs(e.deltaY);
+					if (deltaX > deltaY) {
+						e.deltaY = 0;
+					} else if (deltaY > deltaX) {
+						e.deltaX = 0;
+					} else {
+						return;
+					}
+				}
+				if(o.axis==="x" || o.mouseWheel.axis==="x" || o.axis === "yx" && e.deltaX && !e.deltaY ){
 					var dir="x",
 						px=[Math.round(deltaFactor*d.scrollRatio.x),parseInt(o.mouseWheel.scrollAmount)],
 						amount=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.width() ? mCustomScrollBox.width()*0.9 : px[0],
@@ -1484,7 +1495,7 @@ and dependencies (minified).
 						draggerPos=mCSB_dragger[1][0].offsetLeft,
 						limit=mCSB_dragger[1].parent().width()-mCSB_dragger[1].width(),
 						dlt=o.mouseWheel.axis==="y" ? (e.deltaY || delta) : e.deltaX;
-				}else{
+				}else {
 					var dir="y",
 						px=[Math.round(deltaFactor*d.scrollRatio.y),parseInt(o.mouseWheel.scrollAmount)],
 						amount=o.mouseWheel.scrollAmount!=="auto" ? px[1] : px[0]>=mCustomScrollBox.height() ? mCustomScrollBox.height()*0.9 : px[0],
