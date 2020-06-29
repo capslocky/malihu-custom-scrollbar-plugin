@@ -1477,8 +1477,8 @@ and dependencies (minified).
 				var deltaFactor=o.mouseWheel.deltaFactor!=="auto" ? parseInt(o.mouseWheel.deltaFactor) : (oldIE && e.deltaFactor<100) ? 100 : e.deltaFactor || 100,
 					dur=o.scrollInertia;
 				if (o.axis === "yx" && e.deltaX && e.deltaY ) { 
-					const deltaX = Math.abs(e.deltaX);
-					const deltaY = Math.abs(e.deltaY);
+					var deltaX = Math.abs(e.deltaX);
+					var deltaY = Math.abs(e.deltaY);
 					if (deltaX > deltaY) {
 						e.deltaY = 0;
 					} else if (deltaY > deltaX) {
@@ -1938,9 +1938,15 @@ and dependencies (minified).
 		
 		/* calls the update method automatically */
 		_autoUpdate=function(rem){
-			var $this=$(this),d=$this.data(pluginPfx),o=d.opt,
-				mCSB_container=$("#mCSB_"+d.idx+"_container");
-				if (!mCSB_container.length) { return; }
+			var $this=$(this);
+			var d=$this.data(pluginPfx);
+			var o=d.opt;
+			var mCSB_container=$("#mCSB_"+d.idx+"_container");
+				
+			if (!mCSB_container.length) { 
+				return; 
+			}
+			
 			if(rem){
 				/* 
 				removes autoUpdate timer 
@@ -1950,7 +1956,11 @@ and dependencies (minified).
 				_delete(mCSB_container[0],"autoUpdate");
 				return;
 			}
-			upd();
+
+			if(o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad){
+				upd();
+			}
+
 			function upd(){
 				clearTimeout(mCSB_container[0].autoUpdate);
 				if($this.parents("html").length===0){
@@ -1990,7 +2000,7 @@ and dependencies (minified).
 							}
 						}
 					}
-					if(o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad){upd();}
+				
 				},o.advanced.autoUpdateTimeout);
 			}
 			/* a tiny image loader */
