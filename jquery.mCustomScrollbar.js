@@ -1956,11 +1956,7 @@ and dependencies (minified).
 				_delete(mCSB_container[0],"autoUpdate");
 				return;
 			}
-
-			if(o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad){
-				upd();
-			}
-
+			upd();
 			function upd(){
 				clearTimeout(mCSB_container[0].autoUpdate);
 				if($this.parents("html").length===0){
@@ -2000,7 +1996,7 @@ and dependencies (minified).
 							}
 						}
 					}
-				
+					if(o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad){upd();}
 				},o.advanced.autoUpdateTimeout);
 			}
 			/* a tiny image loader */

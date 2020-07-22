@@ -1,4 +1,5 @@
 #!/bin/bash
+# prerequisite: https://www.npmjs.com/package/uglify-js
 
 echo "Building js file for TSM out of three parts."
 
@@ -20,20 +21,21 @@ customScriptFile="./tsm.js"
 resultFile="./jquery.mCustomScrollbar.concat.min.js"
 
 
-echo "/* Refer to source code here https://github.com/capslocky/malihu-custom-scrollbar-plugin */" > $resultFile
-
-echo "" >> $resultFile
+echo "/* Built from source code https://github.com/capslocky/malihu-custom-scrollbar-plugin */" > $resultFile
+echo "/* Built date: $(date) */" >> $resultFile
+echo >> $resultFile
 
 cat $mousewheelFile >> $resultFile
 
-echo "" >> $resultFile
-echo "" >> $resultFile
+echo >> $resultFile
+echo >> $resultFile
 
 cat $mcsFile >> $resultFile
 
-echo "" >> $resultFile
-echo "" >> $resultFile
+echo >> $resultFile
+echo >> $resultFile
 
 cat $customScriptFile >> $resultFile
 
+echo "Result file is $resultFile"
 echo "Done."
