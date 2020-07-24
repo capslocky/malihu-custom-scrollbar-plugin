@@ -314,7 +314,7 @@ and dependencies (minified).
 				auto-update timeout 
 				values: integer (milliseconds)
 				*/
-				autoUpdateTimeout:60
+				autoUpdateTimeout:500 // baur: incresed from 60 to 500
 			},
 			/* 
 			scrollbar theme 
@@ -1956,19 +1956,23 @@ and dependencies (minified).
 				_delete(mCSB_container[0],"autoUpdate");
 				return;
 			}
-			
-			upd(1);
-			
-			function upd(depth){
+
+			upd();
+
+			// baur: this function causes performance issues
+
+			function upd(){
 				clearTimeout(mCSB_container[0].autoUpdate);
-				
+
 				if($this.parents("html").length===0){
 					/* check element in dom tree */
 					$this=null;
 					return;
 				}
-				
+
 				mCSB_container[0].autoUpdate=setTimeout(function(){
+					// console.log('upd() => setTimeout has been executed.');
+
 					/* update on specific selector(s) length and size change */
 					if(o.advanced.updateOnSelectorChange){
 						d.poll.change.n=sizesSum();
@@ -2000,21 +2004,14 @@ and dependencies (minified).
 							}
 						}
 					}
+
+					if(o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad){
+						upd();
+					}
 					
-					var makeRecursiveCall = o.advanced.updateOnSelectorChange || o.advanced.updateOnContentResize || o.advanced.updateOnImageLoad;					
-										
-					// baur: i don't fully understand the whole code
-					// this is a workaround to avoid infinite recursion
-					// and we still need recursion for scrollbars to appear
-					
-					if(makeRecursiveCall && depth < 50){ 
-						// console.log('upd() => autoUpdate => setTimeout: makeRecursiveCall with depth: ' + depth);
-						upd(depth + 1);
-					}			
-					
-				},o.advanced.autoUpdateTimeout);
+				}, o.advanced.autoUpdateTimeout);
 			}
-			
+
 			/* a tiny image loader */
 			function imgLoader(el){
 				if($(el).hasClass(classes[2])){doUpd(); return;}
